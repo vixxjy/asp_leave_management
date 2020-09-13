@@ -12,6 +12,10 @@ using Leave_Management.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Leave_Management.Contracts;
+using Leave_Management.Repository;
+using AutoMapper;
+using Leave_Management.Mappers;
 
 namespace Leave_Management
 {
@@ -30,6 +34,15 @@ namespace Leave_Management
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+            //adding the contracts and repository relationship to startup file
+            services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
+            services.AddScoped<ILeaveHistoryRepository, LeaveHistoryRepository>();
+            services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
+
+            //automapper
+            services.AddAutoMapper(typeof(Maps));
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();

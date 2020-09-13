@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Leave_Management.Models
+namespace Leave_Management.Data
 {
     public class Employee : IdentityUser
     {
